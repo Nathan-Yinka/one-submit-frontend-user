@@ -125,26 +125,26 @@ const Login = () => {
           <div className="flex items-end justify-between border-b border-[#83FF90] pb-1 mb-4">
             <div className="flex items-center gap-2 text-[#83FF90] pb-1 -mb-[5px]">
               <AiOutlineUser className="text-xl" />
-              <span className="text-[20px] font-light tracking-wide uppercase">
+              <span className="text-[25px] font-light tracking-wide uppercase">
                 Sign In
               </span>
             </div>
             <a
               href="/login/signup"
-              className="text-[14px] text-gray-300 hover:text-white transition-colors pb-1"
+              className="text-[18px] text-gray-300 hover:text-white transition-colors pb-1"
             >
               Register
             </a>
           </div>
 
           {/* Form Container Card - Darker BG, Lighter Border */}
-          <div className="bg-[#050505] border border-gray-500 rounded-sm py-8 px-12 shadow-2xl">
+          <div className="bg-[#050505] border border-gray-500 rounded-sm py-24 px-12 shadow-2xl">
             <form className="space-y-6" onSubmit={handleLogin}>
               {/* Username/Email Input */}
               <div>
                 <label
                   htmlFor="username"
-                  className="block text-[18px] font-light text-white mb-1.5"
+                  className="block text-[25px] font-light text-white mb-1.5"
                 >
                   Username/Email
                 </label>
@@ -153,7 +153,7 @@ const Login = () => {
                   id="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="block w-full p-2.5 bg-black border border-gray-700 text-white text-sm rounded-lg focus:outline-none focus:border-[#83FF90] transition-colors"
+                  className="block w-full p-2.5 bg-black border border-gray-700 text-white text-lg rounded-lg focus:outline-none focus:border-[#83FF90] transition-colors"
                 />
               </div>
 
@@ -161,7 +161,7 @@ const Login = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-[18px] font-light text-white mb-1.5"
+                  className="block text-[25px] font-light text-white mb-1.5"
                 >
                   Password
                 </label>
@@ -171,7 +171,7 @@ const Login = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full p-2.5 pr-10 bg-black border border-gray-700 text-white text-sm rounded-lg focus:outline-none focus:border-[#83FF90] transition-colors"
+                    className="block w-full p-2.5 pr-10 bg-black border border-gray-700 text-white text-lg rounded-lg focus:outline-none focus:border-[#83FF90] transition-colors"
                   />
                   <button
                     type="button"
@@ -201,7 +201,7 @@ const Login = () => {
               <div>
                 <button
                   type="submit"
-                  className="mt-6 px-6 py-2 bg-gradient-to-b from-[#2a2a2a] to-[#111111] border border-[#83FF90] text-[#83FF90] font-light text-[16px] rounded-md hover:border-[#83FF90] transition-all flex items-center justify-center min-w-[80px]"
+                  className="mt-6 px-6 py-2 bg-gradient-to-b from-[#2a2a2a] to-[#111111] border border-[#83FF90] text-[#83FF90] font-light text-[20px] rounded-md hover:border-[#83FF90] transition-all flex items-center justify-center min-w-[80px]"
                   disabled={loading}
                 >
                   {loading ? <Loader /> : "OK"}

@@ -128,14 +128,14 @@ const SignUp = () => {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full max-w-[1400px] mx-auto p-6 md:p-10 lg:p-14">
+      <main className="flex-1 w-full mx-auto p-6 md:p-10 lg:p-14">
         <h2 className="text-[#83FF90] text-[25px] font-light mb-10 tracking-wide">
           Applying for one-submit curator account
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* ROW 1: Personal Info (4 Columns) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
               <label className="block text-gray-300 text-[20px] font-light mb-2">
                 First name
@@ -175,6 +175,10 @@ const SignUp = () => {
                 className="w-full p-2.5 bg-black border border-gray-700 text-white text-sm rounded-sm focus:outline-none focus:border-[#83FF90] transition-colors"
               />
             </div>
+          </div>
+
+          {/* ROW 2: Passwords (3 Columns) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-gray-300 text-[20px] font-light mb-2">
                 Phone Number
@@ -188,10 +192,6 @@ const SignUp = () => {
                 className="w-full p-2.5 bg-black border border-gray-700 text-white text-sm rounded-sm focus:outline-none focus:border-[#83FF90] transition-colors"
               />
             </div>
-          </div>
-
-          {/* ROW 2: Passwords (3 Columns) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-gray-300 text-[20px] font-light mb-2">
                 Password
@@ -240,6 +240,44 @@ const SignUp = () => {
                 </button>
               </div>
             </div>
+
+            <div>
+              <label className="block text-gray-300 text-[20px] font-light mb-2">
+                Gender
+              </label>
+              <div className="flex items-center space-x-6 h-[42px]">
+                <label className="flex items-center space-x-2 cursor-pointer group">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="M"
+                    onChange={handleChange}
+                    checked={formData.gender === "M"}
+                    className="form-radio text-[#83FF90] bg-black border-gray-700 focus:ring-[#83FF90]"
+                  />
+                  <span className="text-gray-300 text-[20px] font-light group-hover:text-white transition-colors">
+                    Male
+                  </span>
+                </label>
+                <label className="flex items-center space-x-2 cursor-pointer group">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="F"
+                    onChange={handleChange}
+                    checked={formData.gender === "F"}
+                    className="form-radio text-[#83FF90] bg-black border-gray-700 focus:ring-[#83FF90]"
+                  />
+                  <span className="text-gray-300 text-[20px] font-light group-hover:text-white transition-colors">
+                    Female
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* ROW 3: Account Details (3 Columns) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-gray-300 text-[20px] font-light mb-2">
                 Transaction Password{" "}
@@ -269,10 +307,6 @@ const SignUp = () => {
                 </button>
               </div>
             </div>
-          </div>
-
-          {/* ROW 3: Account Details (3 Columns) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
               <label className="block text-gray-300 text-[20px] font-light mb-2">
                 Username
@@ -298,39 +332,6 @@ const SignUp = () => {
                 autoComplete="off"
                 className="w-full p-2.5 bg-black border border-gray-700 text-white text-sm rounded-sm focus:outline-none focus:border-[#83FF90] transition-colors"
               />
-            </div>
-            <div>
-              <label className="block text-gray-300 text-[20px] font-light mb-2">
-                Gender
-              </label>
-              <div className="flex items-center space-x-6 h-[42px]">
-                <label className="flex items-center space-x-2 cursor-pointer group">
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="M"
-                    onChange={handleChange}
-                    checked={formData.gender === "M"}
-                    className="form-radio text-[#83FF90] bg-black border-gray-700 focus:ring-[#83FF90]"
-                  />
-                  <span className="text-gray-300 text-sm font-light group-hover:text-white transition-colors">
-                    Male
-                  </span>
-                </label>
-                <label className="flex items-center space-x-2 cursor-pointer group">
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="F"
-                    onChange={handleChange}
-                    checked={formData.gender === "F"}
-                    className="form-radio text-[#83FF90] bg-black border-gray-700 focus:ring-[#83FF90]"
-                  />
-                  <span className="text-gray-300 text-sm font-light group-hover:text-white transition-colors">
-                    Female
-                  </span>
-                </label>
-              </div>
             </div>
           </div>
 

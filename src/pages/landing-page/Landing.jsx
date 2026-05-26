@@ -49,6 +49,7 @@ import Blog16 from "../../assets/16.jpg";
 import SubmitBg from "../../assets/submit.png";
 import InnerImg from "../../assets/inner.jpg";
 import UltimateBg from "../../assets/ultimate.jpg";
+import LeftsIcon from "../../assets/lefts.svg";
 
 const Landing = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -452,6 +453,11 @@ const Landing = () => {
               >
                 <div className="flex items-center gap-2 text-white text-xl md:text-2xl font-book mb-2 transition-all">
                   Start Your Campaign Now
+                  {/* <img
+                    src={LeftsIcon}
+                    alt="arrow right"
+                    className="w-6 h-6 text-green-500 -scale-x-100 group-hover:translate-x-2 transition-transform duration-300 ml-3"
+                  /> */}
                   <span className="text-[#83FF90] text-4xl group-hover:translate-x-2 transition-transform duration-300">
                     »
                   </span>
