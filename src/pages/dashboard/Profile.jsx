@@ -146,7 +146,7 @@ const Profile = () => {
                             initial={{ width: 0 }}
                             animate={{ width: `${profile?.wallet?.credit_score || 0}%` }}
                             transition={{ duration: 1, ease: "easeOut" }}
-                            className="h-full bg-gradient-to-r from-white/60 to-white rounded-full shadow-lg"
+                            className="h-full bg-gradient-to-r from-green-500 to-green-500/60 rounded-full shadow-lg"
                         />
                     </div>
                 </div>

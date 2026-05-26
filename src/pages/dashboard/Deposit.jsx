@@ -139,245 +139,278 @@ const Deposit = () => {
     };
 
     return (
-        <motion.div
-            initial={fadeIn("right", null).initial}
-            whileInView={fadeIn("right", 1 * 2).animate}
-            className="mx-w-full mx-auto md:p-6 p-2 md:mb-2 mb-52 bg-white rounded-lg"
-        >
-            {/* Back Button */}
-            <div className="w-fit transition-transform hover:scale-105 transform bg-gray-200 p-2 rounded-lg shadow-sm mb-6">
+      <motion.div
+        initial={fadeIn("right", null).initial}
+        whileInView={fadeIn("right", 1 * 2).animate}
+        className="mx-w-full mx-auto md:p-6 p-2 md:mb-2 mb-52 bg-white rounded-lg"
+      >
+        {/* Back Button */}
+        <div className="w-fit transition-transform hover:scale-105 transform bg-gray-200 p-2 rounded-lg shadow-sm mb-6">
+          <button
+            onClick={() => window.history.back()}
+            className="flex items-center text-lg text-primary"
+          >
+            <GoArrowLeft />
+            <h2 className="text-xl font-bold text-gray-800 ml-4">Back</h2>
+          </button>
+        </div>
+
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">Deposit</h1>
+
+        {/* Total Balance Display */}
+        <div className="bg-primary text-white p-4 rounded-lg mb-10">
+          <p className="font-semibold text-sm">Total Balance</p>
+          <p className="text-3xl font-bold">
+            {profile?.wallet?.balance || "0.00"} USD
+          </p>
+        </div>
+
+        {/* Show loading state if profile is being fetched */}
+        {isProfileLoading && (
+          <div className="flex justify-center items-center py-8">
+            <Load />
+          </div>
+        )}
+
+        {/* Show error state if profile failed to load */}
+        {!isProfileLoading && !profile && (
+          <div className="flex justify-center items-center py-8">
+            <div className="text-center">
+              <p className="text-red-600 mb-4">Failed to load profile data</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Only show content when profile is loaded */}
+        {!isProfileLoading && profile && (
+          <>
+            {isDepositPage ? (
+              <motion.div
+                key="deposit-confirmation"
+                initial={slideIn("right", null).initial}
+                whileInView={slideIn("right", 1 * 2).animate}
+              >
+                {/* ETH/TRC20 Addresses */}
+                <div className="bg-primary text-white p-4 rounded-lg mb-4">
+                  <p>
+                    <span className="font-bold">ETH address:</span>{" "}
+                    {profile?.settings?.erc_address ||
+                      "0x2835a3a46a193946b395d877a29dc3bc51bd49"}
+                    <button
+                      onClick={() =>
+                        copyToClipboard(profile?.settings?.erc_address)
+                      }
+                    >
+                      <BiCopy className="ml-2 cursor-pointer"></BiCopy>
+                    </button>
+                  </p>
+                  <p>
+                    <span className="font-bold">TRC20 address:</span>{" "}
+                    {profile?.settings?.trc_address ||
+                      "TTXWm4XjoRXem2Ce1KeevUcBrzK2Whpv61"}
+                    <button
+                      onClick={() =>
+                        copyToClipboard(profile?.settings?.trc_address)
+                      }
+                    >
+                      <BiCopy className="ml-2 cursor-pointer"></BiCopy>
+                    </button>
+                  </p>
+                </div>
+
+                {/* Deposit Amount */}
+                <div className="border p-4 rounded-lg text-center text-lg font-bold mb-4">
+                  Deposit: {amount || "N/A USD"}
+                </div>
+
+                {/* Upload Deposit Receipt */}
+                <div className="mb-6">
+                  <label className="block text-gray-600 font-semibold mb-2">
+                    Deposit receipt
+                  </label>
+                  {receipt && (
+                    <img
+                      src={
+                        typeof receipt === "string"
+                          ? receipt
+                          : URL.createObjectURL(receipt)
+                      }
+                      alt="Receipt Preview"
+                      className="w-full max-h-64 mb-4 object-cover rounded-lg"
+                    />
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleReceiptUpload}
+                    className="block w-full border p-2 rounded-lg"
+                  />
+                </div>
+
+                {/* Confirm Button */}
                 <button
-                    onClick={() => window.history.back()}
-                    className="flex items-center text-lg text-primary"
+                  onClick={handleConfirmDeposit}
+                  disabled={isSubmitting}
+                  className="w-full transition-transform hover:scale-105 transform bg-primary text-white py-3 rounded-lg font-semibold hover:bg-green-400 duration-200 flex justify-center items-center"
                 >
-                    <GoArrowLeft />
-                    <h2 className="text-xl font-bold text-gray-800 ml-4">Back</h2>
+                  {isSubmitting ? <Loader /> : "Confirm Deposit"}
                 </button>
-            </div>
-
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">Deposit</h1>
-
-            {/* Total Balance Display */}
-            <div className="bg-primary text-white p-4 rounded-lg mb-10">
-                <p className="font-semibold text-sm">Total Balance</p>
-                <p className="text-3xl font-bold">{profile?.wallet?.balance || '0.00'} USD</p>
-            </div>
-
-            {/* Show loading state if profile is being fetched */}
-            {isProfileLoading && (
-                <div className="flex justify-center items-center py-8">
-                    <Load />
+              </motion.div>
+            ) : (
+              <>
+                {/* Tabs for Deposit Now and Deposit History */}
+                <div className="flex space-x-4 mb-10 border-b">
+                  <button
+                    onClick={() => handleTabChange("deposit")}
+                    className={`pb-2 border-b-2 ${
+                      activeTab === "deposit"
+                        ? "border-green-500 text-green-500"
+                        : "border-transparent text-gray-500"
+                    } focus:outline-none`}
+                  >
+                    Deposit Now
+                  </button>
+                  <button
+                    onClick={() => handleTabChange("history")}
+                    className={`pb-2 border-b-2 ${
+                      activeTab === "history"
+                        ? "border-green-500 text-green-500"
+                        : "border-transparent text-gray-500"
+                    } focus:outline-none`}
+                  >
+                    Deposit History
+                  </button>
                 </div>
-            )}
 
-            {/* Show error state if profile failed to load */}
-            {!isProfileLoading && !profile && (
-                <div className="flex justify-center items-center py-8">
-                    <div className="text-center">
-                        <p className="text-red-600 mb-4">Failed to load profile data</p>
-                        <button 
-                            onClick={() => window.location.reload()} 
-                            className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80"
+                {/* Deposit Now Tab */}
+                {activeTab === "deposit" && (
+                  <motion.div
+                    key="deposit"
+                    initial={slideIn("right", null).initial}
+                    whileInView={slideIn("right", 1 * 2).animate}
+                  >
+                    {/* Preset Amount Buttons */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                      {[10, 25, 50, 100, 200, 500, 1000, 2000].map((value) => (
+                        <button
+                          key={value}
+                          onClick={() => handlePresetAmount(value)}
+                          className="bg-white border border-gray-300 rounded-lg p-4 w-full shadow text-gray-700 font-semibold hover:bg-gray-100 transition"
                         >
-                            Retry
+                          USD <br /> {value}.00
                         </button>
+                      ))}
                     </div>
-                </div>
-            )}
 
-            {/* Only show content when profile is loaded */}
-            {!isProfileLoading && profile && (
-                <>
-                    {isDepositPage ? (
-                        <motion.div
-                            key="deposit-confirmation"
-                            initial={slideIn("right", null).initial}
-                            whileInView={slideIn("right", 1 * 2).animate}
+                    {/* Input Field for Custom Deposit Amount */}
+                    <div className="mb-10">
+                      <label
+                        htmlFor="amount"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Deposit Amount
+                      </label>
+                      <input
+                        type="number"
+                        id="amount"
+                        value={amount}
+                        min="0"
+                        step="0.01"
+                        onChange={(e) => setAmount(e.target.value)}
+                        placeholder="Enter amount"
+                        className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        required
+                      />
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                      onClick={() => setIsDepositPage(true)}
+                      disabled={!amount || amount <= 0}
+                      className={`w-full transition-transform hover:scale-105 transform bg-primary text-white py-3 rounded-lg font-semibold hover:bg-green-400 duration-200 ${
+                        !amount || amount <= 0
+                          ? "disabled:opacity-50 disabled:cursor-not-allowed"
+                          : ""
+                      }`}
+                    >
+                      Next
+                    </button>
+                  </motion.div>
+                )}
+
+                {/* Deposit History Tab */}
+                {activeTab === "history" && (
+                  <motion.div
+                    key="history"
+                    initial={slideIn("left", null).initial}
+                    whileInView={slideIn("left", 1 * 2).animate}
+                    className="space-y-4"
+                  >
+                    {deposits.length > 0 ? (
+                      deposits.map((transaction) => (
+                        <div
+                          key={transaction.id}
+                          className="flex items-center justify-between p-4 bg-white rounded-lg shadow border border-gray-200"
                         >
-                            {/* ETH/TRC20 Addresses */}
-                            <div className="bg-primary text-white p-4 rounded-lg mb-4">
-                                <p>
-                                    <span className="font-bold">ETH address:</span>{" "}
-                                    {profile?.settings?.erc_address || "0x2835a3a46a193946b395d877a29dc3bc51bd49"}
-                                    <button
-                                        onClick={() => copyToClipboard(profile?.settings?.erc_address)}>
-                                        <BiCopy className="ml-2 cursor-pointer"></BiCopy>
-                                    </button>
-                                </p>
-                                <p>
-                                    <span className="font-bold">TRC20 address:</span>{" "}
-
-                                    {profile?.settings?.trc_address || "TTXWm4XjoRXem2Ce1KeevUcBrzK2Whpv61"}
-                                    <button
-                                        onClick={() => copyToClipboard(profile?.settings?.trc_address)}>
-                                        <BiCopy className="ml-2 cursor-pointer"></BiCopy>
-                                    </button>
-                                </p>
-                            </div>
-
-                            {/* Deposit Amount */}
-                            <div className="border p-4 rounded-lg text-center text-lg font-bold mb-4">
-                                Deposit: {amount || "N/A USD"}
-                            </div>
-
-                            {/* Upload Deposit Receipt */}
-                            <div className="mb-6">
-                                <label className="block text-gray-600 font-semibold mb-2">Deposit receipt</label>
-                                {receipt && (
-                                    <img
-                                        src={typeof receipt === "string" ? receipt : URL.createObjectURL(receipt)}
-                                        alt="Receipt Preview"
-                                        className="w-full max-h-64 mb-4 object-cover rounded-lg"
-                                    />
-                                )}
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleReceiptUpload}
-                                    className="block w-full border p-2 rounded-lg"
-                                />
-                            </div>
-
-                            {/* Confirm Button */}
-                            <button
-                                onClick={handleConfirmDeposit}
-                                disabled={isSubmitting}
-                                className="w-full transition-transform hover:scale-105 transform bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/80 duration-200 flex justify-center items-center"
+                          <div>
+                            <p className="font-semibold text-gray-700">
+                              Deposit
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {transaction.date}
+                            </p>
+                          </div>
+                          <div className="flex flex-col items-end">
+                            <span
+                              className={`${
+                                transaction.status === "Confirmed"
+                                  ? "bg-green-500"
+                                  : "bg-primary"
+                              } text-white text-sm font-semibold px-3 py-1 rounded-full mb-1`}
                             >
-                                {isSubmitting ? <Loader /> : "Confirm Deposit"}
-                            </button>
-                        </motion.div>
+                              {transaction.status}
+                            </span>
+                            <p className="text-gray-700 font-bold">
+                              {transaction.amount} USD
+                            </p>
+                            <p className="text-gray-700 font-bold">
+                              {new Date(
+                                transaction.created_at,
+                              ).toLocaleDateString("en-US", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              })}{" "}
+                              at{" "}
+                              {new Date(
+                                transaction.created_at,
+                              ).toLocaleTimeString("en-US", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: true,
+                              })}
+                            </p>
+                          </div>
+                        </div>
+                      ))
                     ) : (
-                        <>
-                            {/* Tabs for Deposit Now and Deposit History */}
-                            <div className="flex space-x-4 mb-10 border-b">
-                                <button
-                                    onClick={() => handleTabChange("deposit")}
-                                    className={`pb-2 border-b-2 ${activeTab === "deposit"
-                                        ? "border-blue-600 text-blue-600"
-                                        : "border-transparent text-gray-500"
-                                        } focus:outline-none`}
-                                >
-                                    Deposit Now
-                                </button>
-                                <button
-                                    onClick={() => handleTabChange("history")}
-                                    className={`pb-2 border-b-2 ${activeTab === "history"
-                                        ? "border-blue-600 text-blue-600"
-                                        : "border-transparent text-gray-500"
-                                        } focus:outline-none`}
-                                >
-                                    Deposit History
-                                </button>
-                            </div>
-
-                            {/* Deposit Now Tab */}
-                            {activeTab === "deposit" && (
-                                <motion.div
-                                    key="deposit"
-                                    initial={slideIn("right", null).initial}
-                                    whileInView={slideIn("right", 1 * 2).animate}
-                                >
-                                    {/* Preset Amount Buttons */}
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                                        {[10, 25, 50, 100, 200, 500, 1000, 2000].map((value) => (
-                                            <button
-                                                key={value}
-                                                onClick={() => handlePresetAmount(value)}
-                                                className="bg-white border border-gray-300 rounded-lg p-4 w-full shadow text-gray-700 font-semibold hover:bg-gray-100 transition"
-                                            >
-                                                USD <br /> {value}.00
-                                            </button>
-                                        ))}
-                                    </div>
-
-                                    {/* Input Field for Custom Deposit Amount */}
-                                    <div className="mb-10">
-                                        <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                                            Deposit Amount
-                                        </label>
-                                        <input
-                                            type="number"
-                                            id="amount"
-                                            value={amount}
-                                            min="0"
-                                            step="0.01"
-                                            onChange={(e) => setAmount(e.target.value)}
-                                            placeholder="Enter amount"
-                                            className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                                            required
-                                        />
-                                    </div>
-
-                                    {/* Submit Button */}
-                                    <button
-                                        onClick={() => setIsDepositPage(true)}
-                                        disabled={!amount || amount <= 0}
-                                        className={`w-full transition-transform hover:scale-105 transform bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/80 duration-200 ${!amount || amount <= 0 ? 'disabled:opacity-50 disabled:cursor-not-allowed' : ''
-                                            }`}
-                                    >
-                                        Next
-                                    </button>
-                                </motion.div>
-                            )}
-
-                            {/* Deposit History Tab */}
-                            {activeTab === "history" && (
-                                <motion.div
-                                    key="history"
-                                    initial={slideIn("left", null).initial}
-                                    whileInView={slideIn("left", 1 * 2).animate}
-                                    className="space-y-4"
-                                >
-                                    {deposits.length > 0 ? (
-                                        deposits.map((transaction) => (
-                                            <div
-                                                key={transaction.id}
-                                                className="flex items-center justify-between p-4 bg-white rounded-lg shadow border border-gray-200"
-                                            >
-                                                <div>
-                                                    <p className="font-semibold text-gray-700">Deposit</p>
-                                                    <p className="text-sm text-gray-500">{transaction.date}</p>
-                                                </div>
-                                                <div className="flex flex-col items-end">
-                                                    <span
-                                                        className={`${transaction.status === "Confirmed"
-                                                            ? "bg-green-500"
-                                                            : "bg-primary"
-                                                            } text-white text-sm font-semibold px-3 py-1 rounded-full mb-1`}
-                                                    >
-                                                        {transaction.status}
-                                                    </span>
-                                                    <p className="text-gray-700 font-bold">
-                                                        {transaction.amount} USD
-                                                    </p>
-                                                    <p className="text-gray-700 font-bold">
-                                                        {new Date(transaction.created_at).toLocaleDateString('en-US', {
-                                                            day: '2-digit',
-                                                            month: 'short',
-                                                            year: 'numeric',
-                                                        })} at {new Date(transaction.created_at).toLocaleTimeString('en-US', {
-                                                            hour: '2-digit',
-                                                            minute: '2-digit',
-                                                            hour12: true,
-                                                        })}
-                                                    </p>
-
-                                                </div>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p className="text-center text-gray-500">
-                                            No deposit history available.
-                                        </p>
-                                    )}
-                                </motion.div>
-                            )}
-                        </>
+                      <p className="text-center text-gray-500">
+                        No deposit history available.
+                      </p>
                     )}
-                </>
+                  </motion.div>
+                )}
+              </>
             )}
-        </motion.div>
+          </>
+        )}
+      </motion.div>
     );
 };
 

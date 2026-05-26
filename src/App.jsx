@@ -58,7 +58,7 @@ function App() {
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         {/* Public Routes */}
-        <Route path={homepage} element={<LoginLayout />}>
+        <Route path={homepage} element={<Landing />}>
           <Route index element={<Login />} />
         </Route>
         <Route path={login} element={<LoginLayout />}>
