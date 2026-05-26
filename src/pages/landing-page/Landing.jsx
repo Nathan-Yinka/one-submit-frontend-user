@@ -50,6 +50,7 @@ import SubmitBg from "../../assets/submit.png";
 import InnerImg from "../../assets/inner.jpg";
 import UltimateBg from "../../assets/ultimate.jpg";
 import LeftsIcon from "../../assets/lefts.svg";
+import RightsIcon from "../../assets/rightb.svg";
 
 const Landing = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -453,14 +454,22 @@ const Landing = () => {
               >
                 <div className="flex items-center gap-2 text-white text-xl md:text-2xl font-book mb-2 transition-all">
                   Start Your Campaign Now
-                  {/* <img
-                    src={LeftsIcon}
-                    alt="arrow right"
-                    className="w-6 h-6 text-green-500 -scale-x-100 group-hover:translate-x-2 transition-transform duration-300 ml-3"
-                  /> */}
-                  <span className="text-[#83FF90] text-4xl group-hover:translate-x-2 transition-transform duration-300">
+                  <div
+                    className="w-6 h-6 bg-[#83FF90] -scale-x-100 group-hover:translate-x-2 transition-transform duration-300 ml-3"
+                    style={{
+                      maskImage: `url(${LeftsIcon})`,
+                      WebkitMaskImage: `url(${LeftsIcon})`,
+                      maskSize: "contain",
+                      WebkitMaskSize: "contain",
+                      maskRepeat: "no-repeat",
+                      WebkitMaskRepeat: "no-repeat",
+                      maskPosition: "center",
+                      WebkitMaskPosition: "center",
+                    }}
+                  />
+                  {/* <span className="text-[#83FF90] text-4xl group-hover:translate-x-2 transition-transform duration-300">
                     »
-                  </span>
+                  </span> */}
                 </div>
                 <p className="text-[#83FF90] text-sm md:text-base font-light tracking-wide">
                   Guaranteed review or your money back
@@ -855,9 +864,19 @@ const Landing = () => {
         <div className="mt-12 relative z-10 mb-4 md:mb-0">
           <button className="group border-2 border-[#83FF90] bg-black text-white text-lg md:text-[25px] font-medium py-3.5 px-8 md:px-12 rounded-2xl flex items-center gap-3 hover:bg-[#83FF90]/10 transition-all duration-300">
             Ready? Let&apos;s start your campaign
-            <span className="text-[#83FF90] text-5xl leading-none group-hover:translate-x-1 transition-transform duration-300">
-              »
-            </span>
+            <div
+              className="w-6 h-6 bg-[#83FF90] group-hover:translate-x-2 transition-transform duration-300 ml-3"
+              style={{
+                maskImage: `url(${RightsIcon})`,
+                WebkitMaskImage: `url(${RightsIcon})`,
+                maskSize: "contain",
+                WebkitMaskSize: "contain",
+                maskRepeat: "no-repeat",
+                WebkitMaskRepeat: "no-repeat",
+                maskPosition: "center",
+                WebkitMaskPosition: "center",
+              }}
+            />
           </button>
         </div>
       </section>
