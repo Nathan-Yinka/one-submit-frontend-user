@@ -17,7 +17,7 @@ const HomeLayout = () => {
   const profile = useSelector((state) => state.profile.user);
 
   return (
-    <div className="dashboard-shell flex bg-black h-screen">
+    <div className="dashboard-shell flex bg-white h-screen">
       <SideBarWeb />
       <div className="flex flex-col w-full h-full">
         <div className="nav-bar flex items-center md:hidden justify-between h-16 bg-black border-b border-primary/30 shadow px-4 md:mx-4">

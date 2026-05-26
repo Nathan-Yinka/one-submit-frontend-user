@@ -610,568 +610,636 @@ const Starting = () => {
     }, []);
 
     return (
-        <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-gray-50 to-white">
-            {/* Modern Header Section */}
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="w-full mx-auto mt-4 md:mt-6 p-4 md:p-6"
-            >
-                {/* Profile and Greeting Card */}
-                <motion.div
-                    initial={slideIn("up", null).initial}
-                    whileInView={slideIn("up", 1 * 2).animate}
-                    className="bg-gradient-to-r from-primary to-primary/80 rounded-2xl shadow-xl p-6 md:p-8 text-white mb-6"
-                >
-                    <div className="flex justify-between items-center mb-6">
-                        <div className="flex items-center space-x-4">
-                            <div className="relative">
-                                {profile?.profile_picture ? (
-                                    <img
-                                        src={profile.profile_picture}
-                                        alt="Profile"
-                                        className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-4 border-white/20 shadow-lg"
-                                    />
-                                ) : (
-                                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/20 flex items-center justify-center border-4 border-white/20 shadow-lg">
-                                        <BiUserCircle className="text-3xl md:text-4xl text-white" />
-                                    </div>
-                                )}
-                                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-400 rounded-full border-2 border-white"></div>
-                            </div>
-                            <div>
-                                <h1 className="text-lg md:text-xl font-bold">Hi, {profile?.first_name} 👋</h1>
-                                <p className="text-white/80 text-xs md:text-sm">Welcome back to your dashboard</p>
-                            </div>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                            {profile?.wallet?.package?.icon ? (
-                                <img
-                                    src={profile.wallet.package.icon}
-                                    alt="Package"
-                                    className="w-10 h-10 md:w-12 md:h-12 object-contain"
-                                />
-                            ) : (
-                                <GiCrown className="text-3xl md:text-4xl text-white" />
-                            )}
-                        </div>
+      <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-gray-50 to-white">
+        {/* Modern Header Section */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full mx-auto mt-4 md:mt-6 p-4 md:p-6"
+        >
+          {/* Profile and Greeting Card */}
+          <motion.div
+            initial={slideIn("up", null).initial}
+            whileInView={slideIn("up", 1 * 2).animate}
+            className="bg-white rounded-2xl shadow p-6 md:p-8 text-gray-800 mb-6 border border-primary/30"
+          >
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex items-center space-x-4">
+                <div className="relative">
+                  {profile?.profile_picture ? (
+                    <img
+                      src={profile.profile_picture}
+                      alt="Profile"
+                      className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-4 border-primary/20 shadow-lg"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/10 flex items-center justify-center border-4 border-primary/20 shadow-lg">
+                      <BiUserCircle className="text-3xl md:text-4xl text-gray-800" />
                     </div>
-
-                    {/* Progress Bar */}
-                    <div className="mb-6">
-                        <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm font-medium">Daily Progress</span>
-                            <span className="text-sm font-bold">
-                                {profile?.current_number_count || 0} / {profile?.total_number_can_play || 0}
-                            </span>
-                        </div>
-                        <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden">
-                            <motion.div
-                                initial={{ width: 0 }}
-                                animate={{ 
-                                    width: `${Math.min(((profile?.current_number_count || 0) / (profile?.total_number_can_play || 1)) * 100, 100)}%` 
-                                }}
-                                transition={{ duration: 1, ease: "easeOut" }}
-                                className="h-full bg-gradient-to-r from-white/60 to-white rounded-full shadow-lg"
-                            />
-                        </div>
-                    </div>
-                </motion.div>
-
-                {/* Wallet Information Cards */}
-                <motion.div
-                    initial={slideIn("up", null).initial}
-                    whileInView={slideIn("up", 2 * 2).animate}
-                    className="grid grid-cols-2 md:grid-cols-4 gap-4"
-                >
-                    {[
-                        {
-                            label: "Wallet Balance",
-                            amount: formatCurrencyWithCode(profile?.wallet?.balance || 0),
-                            description: "Available funds",
-                            icon: "💰",
-                            gradient: "from-primary/90 to-primary"
-                        },
-                        {
-                            label: "Today's Profit",
-                            amount: formatCurrencyWithCode(profile?.today_profit || 0),
-                            description: "Earnings today",
-                            icon: "📈",
-                            gradient: "from-primary/80 to-primary/90"
-                        },
-                        {
-                            label: "Frozen",
-                            amount: formatCurrencyWithCode(profile?.wallet?.on_hold || 0),
-                            description: "Frozen funds",
-                            icon: "❄️",
-                            gradient: "from-primary/70 to-primary/80"
-                        },
-                        {
-                            label: "Salary",
-                            amount: formatCurrencyWithCode(profile?.wallet?.salary || 0),
-                            description: "Daily salary",
-                            icon: "💼",
-                            gradient: "from-primary/60 to-primary/70"
-                        }
-                    ].map((item, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: idx * 0.1 }}
-                            whileHover={{ scale: 1.05, y: -5 }}
-                            className={`bg-gradient-to-br ${item.gradient} rounded-xl shadow-lg p-4 text-white relative overflow-hidden h-full`}
-                        >
-                            <div className="absolute top-0 right-0 w-16 h-16 bg-white/10 rounded-full -translate-y-8 translate-x-8"></div>
-                            <div className="relative z-10 h-full flex flex-col justify-between">
-                                <div className="flex items-center justify-between mb-2">
-                                    <span className="text-xl">{item.icon}</span>
-                                    <div className="w-2 h-2 bg-white/50 rounded-full"></div>
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-xs md:text-sm mb-1">{item.label}</h3>
-                                    <p className="text-white/80 text-xs mb-2">{item.description}</p>
-                                    <p className="font-bold text-base md:text-lg">{item.amount}</p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </motion.div>
-            </motion.div>
-
-            {/* Start Optimization Section */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                className="w-full mt-6 md:mt-8 bg-white rounded-2xl shadow-xl p-6 md:p-8 mx-4 md:mx-6"
-            >
-                <div className="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-800 mb-2">Start Optimization</h2>
-                        <p className="text-gray-600 text-sm md:text-base">Complete tasks to earn rewards</p>
-                    </div>
-                    <div className="bg-primary/10 rounded-xl px-2 py-1 md:px-4 md:py-2">
-                        <p className="text-primary text-sm md:text-lg lg:text-xl font-bold">
-                            {profile?.current_number_count || 0} / {profile?.total_number_can_play || 0}
-                        </p>
-                    </div>
+                  )}
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full border-2 border-white"></div>
                 </div>
-
-                <div className="relative flex justify-center items-center w-full min-h-[400px]">
-                    {isLoading || (isInitialLoad && !imagesReady) ? (
-                        <div className="grid grid-cols-3 grid-rows-3 gap-6 w-full max-w-4xl">
-                            {[...Array(9)].map((_, i) => (
-                                <div
-                                    key={i}
-                                    className="h-full w-full aspect-square bg-gray-100 rounded-lg animate-pulse"
-                                    style={{ animationDelay: `${i * 0.1}s` }}
-                                >
-                                    <div className="h-full w-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded-lg" />
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-3 grid-rows-3 gap-6 w-full max-w-4xl">
-                            {/* Top row */}
-                            {groupedProducts[currentSlide]?.slice(0, 3).map((product, idx) => (
-                                <div
-                                    key={product.id || `top-${idx}`}
-                                    className="flex justify-center items-center border rounded-lg bg-primary p-1 w-full aspect-square transform hover:scale-105 transition-transform"
-                                >
-                                    <img
-                                        src={product.image || "https://via.placeholder.com/150"}
-                                        alt={product.name || `Product ${idx + 1}`}
-                                        className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${loadedImages[product.image] ? "opacity-100" : "opacity-0"
-                                            }`}
-                                    />
-                                </div>
-                            ))}
-
-                            {/* Middle row left */}
-                            <div className="flex justify-center items-center border rounded-lg bg-primary p-1 w-full aspect-square transform hover:scale-105 transition-transform">
-                                {groupedProducts[currentSlide]?.[3] && (
-                                    <img
-                                        src={groupedProducts[currentSlide][3].image || "https://via.placeholder.com/150"}
-                                        alt={groupedProducts[currentSlide][3].name || "Product 4"}
-                                        className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${loadedImages[groupedProducts[currentSlide][3].image]
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                            }`}
-                                    />
-                                )}
-                            </div>
-
-                            {/* Center button */}
-                            <div className="flex justify-center items-center w-full h-full">
-                                <motion.button
-                                    onClick={handleButtonClick}
-                                    whileHover={{ scale: 1.05 }}
-                                    className="bg-primary text-white font-semibold rounded-full flex items-center justify-center shadow-lg text-sm sm:text-base md:text-lg lg:text-xl start-button"
-                                >
-                                    Start
-                                </motion.button>
-                            </div>
-
-                            {/* Middle row right */}
-                            <div className="flex justify-center items-center border rounded-lg bg-primary p-1 w-full aspect-square transform hover:scale-105 transition-transform">
-                                {groupedProducts[currentSlide]?.[4] && (
-                                    <img
-                                        src={groupedProducts[currentSlide][4].image || "https://via.placeholder.com/150"}
-                                        alt={groupedProducts[currentSlide][4].name || "Product 5"}
-                                        className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${loadedImages[groupedProducts[currentSlide][4].image]
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                            }`}
-                                    />
-                                )}
-                            </div>
-
-                            {/* Bottom row */}
-                            {Array.from({ length: 3 }).map((_, i) => {
-                                const product =
-                                    groupedProducts[currentSlide]?.[(5 + i) % groupedProducts[currentSlide]?.length] || {};
-                                return (
-                                    <div
-                                        key={`bottom-${i}`}
-                                        className="flex justify-center items-center border rounded-lg bg-primary p-1 aspect-square transform hover:scale-105 transition-transform"
-                                    >
-                                        <img
-                                            src={product.image || "https://via.placeholder.com/150"}
-                                            alt={product.name || `Product ${i + 6}`}
-                                            className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${loadedImages[product.image] ? "opacity-100" : "opacity-0"
-                                                }`}
-                                        />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    )}
+                <div>
+                  <h1 className="text-lg md:text-xl font-bold">
+                    Hi, {profile?.first_name} 👋
+                  </h1>
+                  <p className="text-gray-800/80 text-xs md:text-sm">
+                    Welcome back to your dashboard
+                  </p>
                 </div>
-            </motion.div>
-
-
-            {/* Important Hint Section */}
-            <div className="w-full md:mb-2 mb-52 mx-auto mt-4 bg-white rounded-lg shadow-lg p-8">
-                <h2 className="text-lg font-bold">Important Hint</h2>
-                <ul className="list-disc ml-4 mt-2 text-gray-600">
-                    <li>Working hours: {profile?.settings?.service_availability_start_time || "00:00"} - {profile?.settings?.service_availability_end_time || "23:00:00"}</li>
-                    <li>For inquiries about applicants, please consult Customer Support Services</li>
-                </ul>
+              </div>
+              <div className="flex items-center space-x-3">
+                {profile?.wallet?.package?.icon ? (
+                  <img
+                    src={profile.wallet.package.icon}
+                    alt="Package"
+                    className="w-10 h-10 md:w-12 md:h-12 object-contain"
+                  />
+                ) : (
+                  <GiCrown className="text-3xl md:text-4xl text-gray-800" />
+                )}
+              </div>
             </div>
 
-            {/* Current Game Loading */}
-            {isLoading_current && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999999]">
-                    <ResponsiveSpinner size="lg" />
-                </div>
-            )}
+            {/* Progress Bar */}
+            <div className="mb-6">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-medium">Daily Progress</span>
+                <span className="text-sm font-bold">
+                  {profile?.current_number_count || 0} /{" "}
+                  {profile?.total_number_can_play || 0}
+                </span>
+              </div>
+              <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{
+                    width: `${Math.min(((profile?.current_number_count || 0) / (profile?.total_number_can_play || 1)) * 100, 100)}%`,
+                  }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full shadow-lg"
+                />
+              </div>
+            </div>
+          </motion.div>
 
-            {/* Modal - Mobile Version (Dialog from bottom) */}
-            {isModalOpen && currentGame && window.innerWidth < 768 && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end justify-center z-[999999]">
-                    <motion.div
-                        initial={{
-                            opacity: 0,
-                            y: 300,
-                            scale: 1
-                        }}
-                        animate={{
-                            opacity: 1,
-                            y: 0,
-                            scale: 1
-                        }}
-                        exit={{
-                            opacity: 0,
-                            y: 300,
-                            scale: 1
-                        }}
-                        className="bg-white p-4 sm:p-8 w-full max-w-2xl rounded-t-3xl shadow-lg relative overflow-y-auto"
-                        style={{
-                            maxHeight: "90vh"
-                        }}
+          {/* Wallet Information Cards */}
+          <motion.div
+            initial={slideIn("up", null).initial}
+            whileInView={slideIn("up", 2 * 2).animate}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4"
+          >
+            {[
+              {
+                label: "Wallet Balance",
+                amount: formatCurrencyWithCode(profile?.wallet?.balance || 0),
+                description: "Available funds",
+                icon: "💰",
+              },
+              {
+                label: "Today's Profit",
+                amount: formatCurrencyWithCode(profile?.today_profit || 0),
+                description: "Earnings today",
+                icon: "📈",
+              },
+              {
+                label: "Frozen",
+                amount: formatCurrencyWithCode(profile?.wallet?.on_hold || 0),
+                description: "Frozen funds",
+                icon: "❄️",
+              },
+              {
+                label: "Salary",
+                amount: formatCurrencyWithCode(profile?.wallet?.salary || 0),
+                description: "Daily salary",
+                icon: "💼",
+              },
+            ].map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="bg-white rounded-xl shadow p-4 text-gray-800 relative overflow-hidden h-full border border-primary/30"
+              >
+                <div className="absolute top-0 right-0 w-16 h-16 bg-primary/10 rounded-full -translate-y-8 translate-x-8"></div>
+                <div className="relative z-10 h-full flex flex-col justify-between">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xl">{item.icon}</span>
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-xs md:text-sm mb-1">
+                      {item.label}
+                    </h3>
+                    <p className="text-gray-800/80 text-xs mb-2">
+                      {item.description}
+                    </p>
+                    <p className="font-bold text-base md:text-lg">
+                      {item.amount}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Start Optimization Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="w-full mt-6 md:mt-8 bg-white rounded-2xl shadow-xl p-6 md:p-8 mx-4 md:mx-6"
+        >
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-gray-800 mb-2">
+                Start Optimization
+              </h2>
+              <p className="text-gray-600 text-sm md:text-base">
+                Complete tasks to earn rewards
+              </p>
+            </div>
+            <div className="bg-primary/10 rounded-xl px-2 py-1 md:px-4 md:py-2">
+              <p className="text-primary text-sm md:text-lg lg:text-xl font-bold">
+                {profile?.current_number_count || 0} /{" "}
+                {profile?.total_number_can_play || 0}
+              </p>
+            </div>
+          </div>
+
+          <div className="relative flex justify-center items-center w-full min-h-[400px]">
+            {isLoading || (isInitialLoad && !imagesReady) ? (
+              <div className="grid grid-cols-3 grid-rows-3 gap-6 w-full max-w-4xl">
+                {[...Array(9)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-full w-full aspect-square bg-gray-100 rounded-lg animate-pulse"
+                    style={{ animationDelay: `${i * 0.1}s` }}
+                  >
+                    <div className="h-full w-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded-lg" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-3 grid-rows-3 gap-6 w-full max-w-4xl">
+                {/* Top row */}
+                {groupedProducts[currentSlide]
+                  ?.slice(0, 3)
+                  .map((product, idx) => (
+                    <div
+                      key={product.id || `top-${idx}`}
+                      className="flex justify-center items-center border border-primary/40 rounded-lg bg-white p-1 w-full aspect-square transform hover:scale-105 transition-transform"
                     >
-                        {/* Loading Overlay - Absolutely positioned over modal */}
-                        {isLoading && (
-                            <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-[1000000] rounded-t-3xl">
-                                <ResponsiveSpinner size="lg" />
-                            </div>
-                        )}
+                      <img
+                        src={product.image || "https://via.placeholder.com/150"}
+                        alt={product.name || `Product ${idx + 1}`}
+                        className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${
+                          loadedImages[product.image]
+                            ? "opacity-100"
+                            : "opacity-0"
+                        }`}
+                      />
+                    </div>
+                  ))}
 
-                        {/* Close Button */}
-                        <button
-                            onClick={toggleModal}
-                            className="absolute top-4 right-4 text-primary text-xl font-bold z-[1000001]"
-                        >
-                            ✕
-                        </button>
-
-                        {/* Modal Title */}
-                        <h2 className="text-2xl font-bold text-center mb-4 sm:mb-6">Task Submission</h2>
-
-                        {/* Product Images and Details */}
-                        <div className="flex items-start sm:space-x-6 mb-4">
-                            {/* Product Images */}
-                            <div className="flex space-x-2 sm:space-x-4 overflow-x-auto w-full sm:w-auto">
-                                {currentGame?.products?.slice(0, 3).map((product) => (
-                                    <div key={product?.id} className="flex-shrink-0 w-[90px] md:w-[120px] h-auto">
-                                        <img
-                                            src={product?.image}
-                                            alt={product?.name}
-                                            className="w-full h-auto object-cover rounded-lg"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Product Details */}
-                            <div className="text-right flex-grow md:w-1/4 w-auto">
-                                {currentGame?.products?.slice(0, 3).map((product) => (
-                                    <p key={product?.id} className="text-sm sm:text-lg font-semibold">
-                                        {product?.name}
-                                    </p>
-                                ))}
-                                <p className="text-sm sm:text-lg text-primary font-bold mt-1 sm:mt-2">
-                                    USD {currentGame?.amount}
-                                </p>
-
-                                <>
-                                    {/* Comments Section */}
-                                    <textarea
-                                        placeholder="Leave your comments here..."
-                                        className="w-full mt-3 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                                        value={comments}
-                                        onChange={(e) => setComments(e.target.value)}
-                                    ></textarea>
-                                </>
-                            </div>
-                        </div>
-
-                        {/* Amount and Commission Section */}
-                        <div className="flex justify-between border-t border-b py-2 sm:py-4 mb-4 text-center">
-                            <div>
-                                <p className="text-base sm:text-xl font-semibold text-gray-500">Total amount</p>
-                                <p className="text-primary font-bold text-base sm:text-xl">USD {currentGame?.amount}</p>
-                            </div>
-                            <div>
-                                <p className="text-base sm:text-xl font-semibold text-gray-500">Commission</p>
-                                <p className="text-primary font-bold text-base sm:text-xl">USD {currentGame?.commission}</p>
-                                <p className="text-sm sm:text-base text-gray-500 mt-1">
-                                    Profit: {currentGame?.commission_percentage || 0}%
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Creation Time and Rating Number */}
-                        <div className="flex justify-between text-sm sm:text-lg text-gray-600 mb-2 sm:mb-4">
-                            <p>Creation time</p>
-                            <p>{new Date(currentGame?.created_at).toLocaleString()}</p>
-                        </div>
-                        <div className="flex justify-between text-sm sm:text-lg text-gray-600 mb-4 sm:mb-6">
-                            <p>Rating No</p>
-                            <p className="text-primary">{currentGame?.rating_no}</p>
-                        </div>
-
-                        {/* Submit Button */}
-                        <button
-                            onClick={async () => {
-                                try {
-                                    const response = await dispatch(
-                                        submitCurrentGame(selectedStar, comments)
-                                    );
-                                    console.log("response", response.message)
-                                    if (response?.success) {
-                                        toast.success("Submission successful!");
-                                        setComments("");
-                                        toggleModal();
-                                    } else {
-                                        ErrorHandler(response.message);
-                                        toggleModal()
-                                    }
-                                } catch (error) {
-                                    ErrorHandler(error);
-                                    toggleModal()
-                                }
-                            }}
-                            className="w-full bg-primary text-white font-semibold py-2 sm:py-3 rounded-full flex justify-center items-center"
-                        >
-                            {currentGame?.pending ? "Confirm Submission" : "Submit"}
-                        </button>
-                    </motion.div>
+                {/* Middle row left */}
+                <div className="flex justify-center items-center border border-primary/40 rounded-lg bg-white p-1 w-full aspect-square transform hover:scale-105 transition-transform">
+                  {groupedProducts[currentSlide]?.[3] && (
+                    <img
+                      src={
+                        groupedProducts[currentSlide][3].image ||
+                        "https://via.placeholder.com/150"
+                      }
+                      alt={groupedProducts[currentSlide][3].name || "Product 4"}
+                      className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${
+                        loadedImages[groupedProducts[currentSlide][3].image]
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                    />
+                  )}
                 </div>
-            )}
 
-            {/* Modal - Desktop/Tablet Version (Centered) */}
-            {isModalOpen && currentGame && window.innerWidth >= 768 && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999999]">
-                    <motion.div
-                        initial={{
-                            opacity: 0,
-                            y: 50,
-                            scale: 0.95
-                        }}
-                        animate={{
-                            opacity: 1,
-                            y: 0,
-                            scale: 1
-                        }}
-                        exit={{
-                            opacity: 0,
-                            y: 50,
-                            scale: 0.95
-                        }}
-                        className="bg-white p-4 sm:p-8 w-full max-w-2xl rounded-3xl shadow-lg relative overflow-y-auto"
-                        style={{
-                            maxHeight: "90vh"
-                        }}
+                {/* Center button */}
+                <div className="flex justify-center items-center w-full h-full">
+                  <motion.button
+                    onClick={handleButtonClick}
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-primary text-white font-semibold rounded-full flex items-center justify-center shadow-lg text-sm sm:text-base md:text-lg lg:text-xl start-button"
+                  >
+                    Start
+                  </motion.button>
+                </div>
+
+                {/* Middle row right */}
+                <div className="flex justify-center items-center border border-primary/40 rounded-lg bg-white p-1 w-full aspect-square transform hover:scale-105 transition-transform">
+                  {groupedProducts[currentSlide]?.[4] && (
+                    <img
+                      src={
+                        groupedProducts[currentSlide][4].image ||
+                        "https://via.placeholder.com/150"
+                      }
+                      alt={groupedProducts[currentSlide][4].name || "Product 5"}
+                      className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${
+                        loadedImages[groupedProducts[currentSlide][4].image]
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                    />
+                  )}
+                </div>
+
+                {/* Bottom row */}
+                {Array.from({ length: 3 }).map((_, i) => {
+                  const product =
+                    groupedProducts[currentSlide]?.[
+                      (5 + i) % groupedProducts[currentSlide]?.length
+                    ] || {};
+                  return (
+                    <div
+                      key={`bottom-${i}`}
+                      className="flex justify-center items-center border border-primary/40 rounded-lg bg-white p-1 aspect-square transform hover:scale-105 transition-transform"
                     >
-                        {/* Loading Overlay - Absolutely positioned over modal */}
-                        {isLoading && (
-                            <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-[1000000] rounded-3xl">
-                                <ResponsiveSpinner size="lg" />
-                            </div>
-                        )}
-
-                        {/* Close Button */}
-                        <button
-                            onClick={toggleModal}
-                            className="absolute top-4 right-4 text-primary text-xl font-bold z-[1000001]"
-                        >
-                            ✕
-                        </button>
-
-                        {/* Modal Title */}
-                        <h2 className="text-2xl font-bold text-center mb-4 sm:mb-6">Task Submission</h2>
-
-                        {/* Product Images and Details */}
-                        <div className="flex items-start sm:space-x-6 mb-4">
-                            {/* Product Images */}
-                            <div className="flex space-x-2 sm:space-x-4 overflow-x-auto w-full sm:w-auto">
-                                {currentGame?.products?.slice(0, 3).map((product) => (
-                                    <div key={product?.id} className="flex-shrink-0 w-[90px] md:w-[120px] h-auto">
-                                        <img
-                                            src={product?.image}
-                                            alt={product?.name}
-                                            className="w-full h-auto object-cover rounded-lg"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Product Details */}
-                            <div className="text-right flex-grow md:w-1/4 w-auto">
-                                {currentGame?.products?.slice(0, 3).map((product) => (
-                                    <p key={product?.id} className="text-sm sm:text-lg font-semibold">
-                                        {product?.name}
-                                    </p>
-                                ))}
-                                <p className="text-sm sm:text-lg text-primary font-bold mt-1 sm:mt-2">
-                                    USD {currentGame?.amount}
-                                </p>
-
-                                <>
-                                    {/* Comments Section */}
-                                    <textarea
-                                        placeholder="Leave your comments here..."
-                                        className="w-full mt-3 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                                        value={comments}
-                                        onChange={(e) => setComments(e.target.value)}
-                                    ></textarea>
-                                </>
-                            </div>
-                        </div>
-
-                        {/* Amount and Commission Section */}
-                        <div className="flex justify-between border-t border-b py-2 sm:py-4 mb-4 text-center">
-                            <div>
-                                <p className="text-base sm:text-xl font-semibold text-gray-500">Total amount</p>
-                                <p className="text-primary font-bold text-base sm:text-xl">USD {currentGame?.amount}</p>
-                            </div>
-                            <div>
-                                <p className="text-base sm:text-xl font-semibold text-gray-500">Commission</p>
-                                <p className="text-primary font-bold text-base sm:text-xl">USD {currentGame?.commission}</p>
-                                <p className="text-sm sm:text-base text-gray-500 mt-1">
-                                    Profit: {currentGame?.commission_percentage || 0}%
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Creation Time and Rating Number */}
-                        <div className="flex justify-between text-sm sm:text-lg text-gray-600 mb-2 sm:mb-4">
-                            <p>Creation time</p>
-                            <p>{new Date(currentGame?.created_at).toLocaleString()}</p>
-                        </div>
-                        <div className="flex justify-between text-sm sm:text-lg text-gray-600 mb-4 sm:mb-6">
-                            <p>Rating No</p>
-                            <p className="text-primary">{currentGame?.rating_no}</p>
-                        </div>
-
-                        {/* Submit Button */}
-                        <button
-                            onClick={async () => {
-                                try {
-                                    const response = await dispatch(
-                                        submitCurrentGame(selectedStar, comments)
-                                    );
-                                    console.log("response", response.message)
-                                    if (response?.success) {
-                                        toast.success("Submission successful!");
-                                        setComments("");
-                                        toggleModal();
-                                    } else {
-                                        ErrorHandler(response.message);
-                                        toggleModal()
-                                    }
-                                } catch (error) {
-                                    ErrorHandler(error);
-                                    toggleModal()
-                                }
-                            }}
-                            className="w-full bg-primary text-white font-semibold py-2 sm:py-3 rounded-full flex justify-center items-center"
-                        >
-                            {currentGame?.pending ? "Confirm Submission" : "Submit"}
-                        </button>
-                    </motion.div>
-                </div>
+                      <img
+                        src={product.image || "https://via.placeholder.com/150"}
+                        alt={product.name || `Product ${i + 6}`}
+                        className={`w-full h-full object-cover rounded-lg transition-opacity duration-500 ${
+                          loadedImages[product.image]
+                            ? "opacity-100"
+                            : "opacity-0"
+                        }`}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             )}
-            <BottomNavMobile className="md:hidden" />
+          </div>
+        </motion.div>
 
-            {/* Custom CSS for Start button */}
-            <style jsx>{`
-                .start-button {
-                    width: 80px;
-                    height: 80px;
-                    min-width: 80px;
-                    min-height: 80px;
-                }
-                
-                @media (min-width: 640px) {
-                    .start-button {
-                        width: 100px;
-                        height: 100px;
-                        min-width: 100px;
-                        min-height: 100px;
-                    }
-                }
-                
-                @media (min-width: 768px) {
-                    .start-button {
-                        width: 120px;
-                        height: 120px;
-                        min-width: 120px;
-                        min-height: 120px;
-                    }
-                }
-                
-                @media (min-width: 1024px) {
-                    .start-button {
-                        width: 150px;
-                        height: 150px;
-                        min-width: 150px;
-                        min-height: 150px;
-                    }
-                }
-            `}</style>
+        {/* Important Hint Section */}
+        <div className="w-full md:mb-2 mb-52 mx-auto mt-4 bg-white rounded-lg shadow-lg p-8">
+          <h2 className="text-lg font-bold">Important Hint</h2>
+          <ul className="list-disc ml-4 mt-2 text-gray-600">
+            <li>
+              Working hours:{" "}
+              {profile?.settings?.service_availability_start_time || "00:00"} -{" "}
+              {profile?.settings?.service_availability_end_time || "23:00:00"}
+            </li>
+            <li>
+              For inquiries about applicants, please consult Customer Support
+              Services
+            </li>
+          </ul>
         </div>
+
+        {/* Current Game Loading */}
+        {isLoading_current && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999999]">
+            <ResponsiveSpinner size="lg" />
+          </div>
+        )}
+
+        {/* Modal - Mobile Version (Dialog from bottom) */}
+        {isModalOpen && currentGame && window.innerWidth < 768 && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-end justify-center z-[999999]">
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 300,
+                scale: 1,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                y: 300,
+                scale: 1,
+              }}
+              className="bg-white p-4 sm:p-8 w-full max-w-2xl rounded-t-3xl shadow-lg relative overflow-y-auto"
+              style={{
+                maxHeight: "90vh",
+              }}
+            >
+              {/* Loading Overlay - Absolutely positioned over modal */}
+              {isLoading && (
+                <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-[1000000] rounded-t-3xl">
+                  <ResponsiveSpinner size="lg" />
+                </div>
+              )}
+
+              {/* Close Button */}
+              <button
+                onClick={toggleModal}
+                className="absolute top-4 right-4 text-primary text-xl font-bold z-[1000001]"
+              >
+                ✕
+              </button>
+
+              {/* Modal Title */}
+              <h2 className="text-2xl font-bold text-center mb-4 sm:mb-6">
+                Task Submission
+              </h2>
+
+              {/* Product Images and Details */}
+              <div className="flex items-start sm:space-x-6 mb-4">
+                {/* Product Images */}
+                <div className="flex space-x-2 sm:space-x-4 overflow-x-auto w-full sm:w-auto">
+                  {currentGame?.products?.slice(0, 3).map((product) => (
+                    <div
+                      key={product?.id}
+                      className="flex-shrink-0 w-[90px] md:w-[120px] h-auto"
+                    >
+                      <img
+                        src={product?.image}
+                        alt={product?.name}
+                        className="w-full h-auto object-cover rounded-lg"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Product Details */}
+                <div className="text-right flex-grow md:w-1/4 w-auto">
+                  {currentGame?.products?.slice(0, 3).map((product) => (
+                    <p
+                      key={product?.id}
+                      className="text-sm sm:text-lg font-semibold"
+                    >
+                      {product?.name}
+                    </p>
+                  ))}
+                  <p className="text-sm sm:text-lg text-primary font-bold mt-1 sm:mt-2">
+                    USD {currentGame?.amount}
+                  </p>
+
+                  <>
+                    {/* Comments Section */}
+                    <textarea
+                      placeholder="Leave your comments here..."
+                      className="w-full mt-3 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      value={comments}
+                      onChange={(e) => setComments(e.target.value)}
+                    ></textarea>
+                  </>
+                </div>
+              </div>
+
+              {/* Amount and Commission Section */}
+              <div className="flex justify-between border-t border-b py-2 sm:py-4 mb-4 text-center">
+                <div>
+                  <p className="text-base sm:text-xl font-semibold text-gray-500">
+                    Total amount
+                  </p>
+                  <p className="text-primary font-bold text-base sm:text-xl">
+                    USD {currentGame?.amount}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-base sm:text-xl font-semibold text-gray-500">
+                    Commission
+                  </p>
+                  <p className="text-primary font-bold text-base sm:text-xl">
+                    USD {currentGame?.commission}
+                  </p>
+                  <p className="text-sm sm:text-base text-gray-500 mt-1">
+                    Profit: {currentGame?.commission_percentage || 0}%
+                  </p>
+                </div>
+              </div>
+
+              {/* Creation Time and Rating Number */}
+              <div className="flex justify-between text-sm sm:text-lg text-gray-600 mb-2 sm:mb-4">
+                <p>Creation time</p>
+                <p>{new Date(currentGame?.created_at).toLocaleString()}</p>
+              </div>
+              <div className="flex justify-between text-sm sm:text-lg text-gray-600 mb-4 sm:mb-6">
+                <p>Rating No</p>
+                <p className="text-primary">{currentGame?.rating_no}</p>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await dispatch(
+                      submitCurrentGame(selectedStar, comments),
+                    );
+                    console.log("response", response.message);
+                    if (response?.success) {
+                      toast.success("Submission successful!");
+                      setComments("");
+                      toggleModal();
+                    } else {
+                      ErrorHandler(response.message);
+                      toggleModal();
+                    }
+                  } catch (error) {
+                    ErrorHandler(error);
+                    toggleModal();
+                  }
+                }}
+                className="w-full bg-primary text-white font-semibold py-2 sm:py-3 rounded-full flex justify-center items-center"
+              >
+                {currentGame?.pending ? "Confirm Submission" : "Submit"}
+              </button>
+            </motion.div>
+          </div>
+        )}
+
+        {/* Modal - Desktop/Tablet Version (Centered) */}
+        {isModalOpen && currentGame && window.innerWidth >= 768 && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[999999]">
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: 50,
+                scale: 0.95,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                y: 50,
+                scale: 0.95,
+              }}
+              className="bg-white p-4 sm:p-8 w-full max-w-2xl rounded-3xl shadow-lg relative overflow-y-auto"
+              style={{
+                maxHeight: "90vh",
+              }}
+            >
+              {/* Loading Overlay - Absolutely positioned over modal */}
+              {isLoading && (
+                <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-[1000000] rounded-3xl">
+                  <ResponsiveSpinner size="lg" />
+                </div>
+              )}
+
+              {/* Close Button */}
+              <button
+                onClick={toggleModal}
+                className="absolute top-4 right-4 text-primary text-xl font-bold z-[1000001]"
+              >
+                ✕
+              </button>
+
+              {/* Modal Title */}
+              <h2 className="text-2xl font-bold text-center mb-4 sm:mb-6">
+                Task Submission
+              </h2>
+
+              {/* Product Images and Details */}
+              <div className="flex items-start sm:space-x-6 mb-4">
+                {/* Product Images */}
+                <div className="flex space-x-2 sm:space-x-4 overflow-x-auto w-full sm:w-auto">
+                  {currentGame?.products?.slice(0, 3).map((product) => (
+                    <div
+                      key={product?.id}
+                      className="flex-shrink-0 w-[90px] md:w-[120px] h-auto"
+                    >
+                      <img
+                        src={product?.image}
+                        alt={product?.name}
+                        className="w-full h-auto object-cover rounded-lg"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Product Details */}
+                <div className="text-right flex-grow md:w-1/4 w-auto">
+                  {currentGame?.products?.slice(0, 3).map((product) => (
+                    <p
+                      key={product?.id}
+                      className="text-sm sm:text-lg font-semibold"
+                    >
+                      {product?.name}
+                    </p>
+                  ))}
+                  <p className="text-sm sm:text-lg text-primary font-bold mt-1 sm:mt-2">
+                    USD {currentGame?.amount}
+                  </p>
+
+                  <>
+                    {/* Comments Section */}
+                    <textarea
+                      placeholder="Leave your comments here..."
+                      className="w-full mt-3 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      value={comments}
+                      onChange={(e) => setComments(e.target.value)}
+                    ></textarea>
+                  </>
+                </div>
+              </div>
+
+              {/* Amount and Commission Section */}
+              <div className="flex justify-between border-t border-b py-2 sm:py-4 mb-4 text-center">
+                <div>
+                  <p className="text-base sm:text-xl font-semibold text-gray-500">
+                    Total amount
+                  </p>
+                  <p className="text-primary font-bold text-base sm:text-xl">
+                    USD {currentGame?.amount}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-base sm:text-xl font-semibold text-gray-500">
+                    Commission
+                  </p>
+                  <p className="text-primary font-bold text-base sm:text-xl">
+                    USD {currentGame?.commission}
+                  </p>
+                  <p className="text-sm sm:text-base text-gray-500 mt-1">
+                    Profit: {currentGame?.commission_percentage || 0}%
+                  </p>
+                </div>
+              </div>
+
+              {/* Creation Time and Rating Number */}
+              <div className="flex justify-between text-sm sm:text-lg text-gray-600 mb-2 sm:mb-4">
+                <p>Creation time</p>
+                <p>{new Date(currentGame?.created_at).toLocaleString()}</p>
+              </div>
+              <div className="flex justify-between text-sm sm:text-lg text-gray-600 mb-4 sm:mb-6">
+                <p>Rating No</p>
+                <p className="text-primary">{currentGame?.rating_no}</p>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await dispatch(
+                      submitCurrentGame(selectedStar, comments),
+                    );
+                    console.log("response", response.message);
+                    if (response?.success) {
+                      toast.success("Submission successful!");
+                      setComments("");
+                      toggleModal();
+                    } else {
+                      ErrorHandler(response.message);
+                      toggleModal();
+                    }
+                  } catch (error) {
+                    ErrorHandler(error);
+                    toggleModal();
+                  }
+                }}
+                className="w-full bg-primary text-white font-semibold py-2 sm:py-3 rounded-full flex justify-center items-center"
+              >
+                {currentGame?.pending ? "Confirm Submission" : "Submit"}
+              </button>
+            </motion.div>
+          </div>
+        )}
+        <BottomNavMobile className="md:hidden" />
+
+        {/* Custom CSS for Start button */}
+        <style jsx>{`
+          .start-button {
+            width: 80px;
+            height: 80px;
+            min-width: 80px;
+            min-height: 80px;
+          }
+
+          @media (min-width: 640px) {
+            .start-button {
+              width: 100px;
+              height: 100px;
+              min-width: 100px;
+              min-height: 100px;
+            }
+          }
+
+          @media (min-width: 768px) {
+            .start-button {
+              width: 120px;
+              height: 120px;
+              min-width: 120px;
+              min-height: 120px;
+            }
+          }
+
+          @media (min-width: 1024px) {
+            .start-button {
+              width: 150px;
+              height: 150px;
+              min-width: 150px;
+              min-height: 150px;
+            }
+          }
+        `}</style>
+      </div>
     );
 };
 

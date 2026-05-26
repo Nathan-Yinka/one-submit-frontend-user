@@ -313,7 +313,7 @@ const Home = () => {
       `}</style>
 
       {/* Links Section */}
-      <div className="bg-primary md:py-12 py-6">
+      <div className="bg-gray-50 border-y border-gray-200 md:py-12 py-6">
         <div className="container mx-auto grid grid-cols-4 md:flex justify-around md:flex-wrap md:gap-4 gap-2 px-4">
           {[
             { label: "Starting", icon: MdRestartAlt, route: starting },
@@ -329,7 +329,7 @@ const Home = () => {
               key={idx}
               whileHover={{ scale: 1.05 }}
               onClick={() => item.route && navigate(item.route)}
-              className="bg-secondary cursor-pointer rounded-lg shadow-lg p-3 w-auto h-auto md:w-[120px] md:h-[80px] text-center flex flex-col items-center justify-center"
+              className="bg-white cursor-pointer rounded-lg shadow p-3 w-auto h-auto md:w-[120px] md:h-[80px] text-center flex flex-col items-center justify-center"
             >
               <item.icon className="text-2xl text-primary mb-1" />
               <p className="md:text-xs text-sm font-semibold text-gray-700">
@@ -431,14 +431,22 @@ const Home = () => {
         )}
       </div>
       <div className="md:pb-0 pb-28 md:px-0 px-2">
-        <iframe
-          style={{ borderRadius: "12px" }}
-          src="https://open.spotify.com/embed/playlist/52ryhemOPZrgqWE98Sr3kl?utm_source=generator"
-          width="100%"
-          height="512"
-          allowFullScreen={false}
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        />
+        <div className="bg-white border-2 border-green-500 rounded-xl overflow-hidden shadow-sm p-[2px]">
+          <iframe
+            title="Spotify playlist"
+            className="block w-full rounded-lg"
+            src="https://open.spotify.com/embed/playlist/52ryhemOPZrgqWE98Sr3kl?utm_source=generator&theme=0"
+            width="100%"
+            height="512"
+            loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            style={{
+              border: "none",
+              backgroundColor: "#ffffff",
+              colorScheme: "light",
+            }}
+          />
+        </div>
       </div>
       <BottomNavMobile className="md:hidden" />
     </div>
