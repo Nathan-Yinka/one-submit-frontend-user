@@ -44,18 +44,27 @@ function SideBarWeb() {
     (notification) => !notification.is_read,
   ).length;
 
+  const navClass = ({ isActive }) =>
+    [
+      "group flex items-center gap-x-4 w-full px-5 py-3 rounded-xl transition-all duration-300",
+      isActive
+        ? "text-[#83FF90] bg-primary/15 border border-primary/40 font-bold shadow-[0_10px_28px_rgba(34,197,94,0.16)]"
+        : "text-gray-300 hover:bg-white/10 hover:text-white border border-transparent",
+    ].join(" ");
+
   return (
-    <div className="w-[240px] lg:w-[368px] bg-black px-4 py-6 hidden md:flex flex-col justify-between h-screen shadow-md overflow-y-auto border-r border-primary/30">
+    <div className="w-[240px] lg:w-[330px] bg-[#050806] px-4 py-6 hidden md:flex flex-col justify-between h-screen shadow-2xl overflow-y-auto border-r border-primary/25">
       {/* Logo */}
       <motion.div
         initial={zoomIn(1, "min").initial}
         whileInView={zoomIn(1, "min").animate}
+        className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-[0_18px_40px_rgba(0,0,0,0.22)]"
       >
-        <img src={logo} alt="Logo" className="w-auto h-auto" />
+        <img src={logo} alt="Logo" className="h-auto w-40" />
       </motion.div>
 
       {/* Navigation Links */}
-      <div className="mt-2 flex flex-col space-y-3 text-gray-300 flex-grow">
+      <div className="mt-6 flex flex-col space-y-2 text-gray-300 flex-grow">
         <motion.div
           initial={slideIn("left", 0).initial}
           whileInView={slideIn("left", 2).animate}
@@ -63,11 +72,7 @@ function SideBarWeb() {
           <NavLink
             to={home}
             end
-            className={({ isActive }) =>
-              isActive
-                ? "text-green-500 bg-primary/10 border border-primary/30 font-bold flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/15 hover:text-white rounded-lg transition"
-                : "flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/10 hover:text-white rounded-lg transition"
-            }
+            className={navClass}
           >
             <MdOutlineDashboard className="text-2xl" />
             <p>Home</p>
@@ -80,11 +85,7 @@ function SideBarWeb() {
         >
           <NavLink
             to={starting}
-            className={({ isActive }) =>
-              isActive
-                ? "text-green-500 bg-primary/10 border border-primary/30 font-bold flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/15 hover:text-white rounded-lg transition"
-                : "flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/10 hover:text-white rounded-lg transition"
-            }
+            className={navClass}
           >
             <RiRestartLine className="text-2xl" />
             <p>Starting</p>
@@ -97,11 +98,7 @@ function SideBarWeb() {
         >
           <NavLink
             to={records}
-            className={({ isActive }) =>
-              isActive
-                ? "text-green-500 bg-primary/10 border border-primary/30 font-bold flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/15 hover:text-white rounded-lg transition"
-                : "flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/10 hover:text-white rounded-lg transition"
-            }
+            className={navClass}
           >
             <BiBookOpen className="text-2xl" />
             <p>Records</p>
@@ -114,11 +111,7 @@ function SideBarWeb() {
         >
           <NavLink
             to={profile}
-            className={({ isActive }) =>
-              isActive
-                ? "text-green-500 bg-primary/10 border border-primary/30 font-bold flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/15 hover:text-white rounded-lg transition"
-                : "flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/10 hover:text-white rounded-lg transition"
-            }
+            className={navClass}
           >
             <GiEgyptianProfile className="text-2xl" />
             <p>Profile</p>
@@ -131,11 +124,7 @@ function SideBarWeb() {
         >
           <NavLink
             to={notificationsRoute}
-            className={({ isActive }) =>
-              isActive
-                ? "text-green-500 bg-primary/10 border border-primary/30 font-bold flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/15 hover:text-white rounded-lg transition"
-                : "flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/10 hover:text-white rounded-lg transition"
-            }
+            className={navClass}
           >
             <div className="relative flex items-center">
               <IoMdNotificationsOutline
@@ -157,11 +146,7 @@ function SideBarWeb() {
         >
           <NavLink
             to={withdraw}
-            className={({ isActive }) =>
-              isActive
-                ? "text-green-500 bg-primary/10 border border-primary/30 font-bold flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/15 hover:text-white rounded-lg transition"
-                : "flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/10 hover:text-white rounded-lg transition"
-            }
+            className={navClass}
           >
             <BiMoneyWithdraw className="text-2xl" />
             <p>Withdraw</p>
@@ -174,11 +159,7 @@ function SideBarWeb() {
         >
           <NavLink
             to={deposit}
-            className={({ isActive }) =>
-              isActive
-                ? "text-green-500 bg-primary/10 border border-primary/30 font-bold flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/15 hover:text-white rounded-lg transition"
-                : "flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/10 hover:text-white rounded-lg transition"
-            }
+            className={navClass}
           >
             <RiLuggageDepositLine className="text-2xl" />
             <p>Deposit</p>
@@ -191,11 +172,7 @@ function SideBarWeb() {
         >
           <NavLink
             to={events}
-            className={({ isActive }) =>
-              isActive
-                ? "text-green-500 bg-primary/10 border border-primary/30 font-bold flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/15 hover:text-white rounded-lg transition"
-                : "flex items-center gap-x-4 w-full px-5 py-3 hover:bg-primary/10 hover:text-white rounded-lg transition"
-            }
+            className={navClass}
           >
             <BiCalendarEvent className="text-2xl" />
             <p>Events</p>
@@ -207,7 +184,7 @@ function SideBarWeb() {
       <motion.button
         initial={slideIn("up", null).initial}
         whileInView={slideIn("up", 2).animate}
-        className="flex items-center gap-x-3 py-2 px-4 text-red-400 hover:bg-red-500/10 rounded-md"
+        className="flex items-center gap-x-3 py-3 px-4 text-red-300 hover:bg-red-500/10 rounded-xl border border-red-500/15 transition"
         onClick={handleLogout} // Add the logout handler here
       >
         <CiLogout className="text-2xl" />

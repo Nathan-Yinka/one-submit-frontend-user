@@ -203,12 +203,12 @@ const Home = () => {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className="min-h-screen bg-white flex flex-col relative">
+    <div className="min-h-screen flex flex-col relative text-white">
       {/* Sliding Notification Bar */}
       <motion.div
         initial={{ y: -50 }}
         animate={{ y: 0 }}
-        className="bg-white w-full text-black py-2 z-30 flex items-center justify-center"
+        className="w-full text-[#dfffe7] py-2 z-30 flex items-center justify-center border-b border-primary/20 bg-[#050806]/85 backdrop-blur-xl"
         // style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}
         transition={{ duration: 0.5 }}
       >
@@ -231,12 +231,12 @@ const Home = () => {
       </motion.div>
 
       {/* Video Section */}
-      <div className="relative w-full md:h-[31rem] h-[15rem] overflow-hidden">
+      <div className="relative w-full md:h-[31rem] h-[15rem] overflow-hidden rounded-none md:rounded-2xl border border-white/10 shadow-[0_24px_70px_rgba(0,0,0,0.35)]">
         {isVideoLoading && (
-          <div className="animate-pulse bg-gray-100 w-full h-full rounded-lg" />
+          <div className="animate-pulse bg-white/10 w-full h-full rounded-lg" />
         )}
         <video
-          className="w-full h-full object-fill"
+          className="w-full h-full object-cover"
           autoPlay
           loop
           muted
@@ -259,7 +259,7 @@ const Home = () => {
       {/* Fixed Marquee Carousel Section */}
       <div
         ref={carouselRef}
-        className="w-full bg-gradient-to-r from-gray-50 to-gray-100 py-8 overflow-hidden relative"
+        className="w-full bg-gradient-to-r from-[#07110a] via-[#0d1711] to-[#151019] py-8 overflow-hidden relative border-y border-white/10"
         onMouseEnter={() => setIsCarouselPaused(true)}
         onMouseLeave={() => setIsCarouselPaused(false)}
       >
@@ -313,7 +313,7 @@ const Home = () => {
       `}</style>
 
       {/* Links Section */}
-      <div className="bg-gray-50 border-y border-gray-200 md:py-12 py-6">
+      <div className="bg-[#09110c]/90 border-y border-white/10 md:py-12 py-6">
         <div className="container mx-auto grid grid-cols-4 md:flex justify-around md:flex-wrap md:gap-4 gap-2 px-4">
           {[
             { label: "Starting", icon: MdRestartAlt, route: starting },
@@ -329,10 +329,10 @@ const Home = () => {
               key={idx}
               whileHover={{ scale: 1.05 }}
               onClick={() => item.route && navigate(item.route)}
-              className="bg-white cursor-pointer rounded-lg shadow p-3 w-auto h-auto md:w-[120px] md:h-[80px] text-center flex flex-col items-center justify-center"
+              className="bg-white/[0.06] cursor-pointer rounded-xl shadow p-3 w-auto h-auto md:w-[120px] md:h-[86px] text-center flex flex-col items-center justify-center border border-white/10 hover:border-primary/50 hover:bg-primary/10 transition-all"
             >
-              <item.icon className="text-2xl text-primary mb-1" />
-              <p className="md:text-xs text-sm font-semibold text-gray-700">
+              <item.icon className="text-2xl text-[#83FF90] mb-1" />
+              <p className="md:text-xs text-sm font-semibold text-gray-100">
                 {item.label}
               </p>
             </motion.div>
@@ -346,7 +346,7 @@ const Home = () => {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
           transition={{ duration: 0.5 }}
-          className="fixed bottom-24 left-4 md:left-80 bg-primary text-white px-4 py-3 rounded-lg shadow-lg flex items-center cursor-pointer z-10 md:bottom-4"
+          className="fixed bottom-24 left-4 md:left-80 bg-primary text-white px-4 py-3 rounded-xl shadow-[0_18px_40px_rgba(34,197,94,0.25)] flex items-center cursor-pointer z-10 md:bottom-4"
           onClick={toggleWelcome}
           style={{
             width: showWelcome ? "auto" : "10px",
@@ -372,12 +372,17 @@ const Home = () => {
       )}
 
       {/* Packs Section */}
-      <div className="container mx-auto pt-4 px-2 md:pb-2 pb-10">
+      <div className="container mx-auto pt-8 px-2 md:pb-4 pb-10">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800">VIP Levels</h2>
+          <div>
+            <p className="text-[#83FF90] text-sm font-semibold uppercase tracking-[0.18em]">
+              Campaign growth
+            </p>
+            <h2 className="text-2xl font-bold text-white">VIP Levels</h2>
+          </div>
           <button
             onClick={() => navigate(`${home}/${level}`)}
-            className="font-semibold rounded-full border border-primary p-2 flex items-center transition-transform hover:scale-105 transform"
+            className="font-semibold rounded-full border border-primary/60 px-4 py-2 flex items-center transition-all hover:scale-105 hover:bg-primary/10 transform text-white"
           >
             View More
             <BsArrowRightShort className="text-2xl text-primary" />
@@ -395,7 +400,7 @@ const Home = () => {
               <motion.div
                 key={idx}
                 onClick={() => navigate(`${home}/${level}`)}
-                className="p-5 rounded-lg cursor-pointer bg-secondary border-primary border flex flex-col justify-center items-center h-auto relative min-w-0"
+                className="p-5 rounded-xl cursor-pointer bg-white/[0.06] border border-white/10 hover:border-primary/50 hover:bg-white/[0.09] flex flex-col justify-center items-center h-auto relative min-w-0 shadow-[0_16px_38px_rgba(0,0,0,0.22)] transition-all"
               >
                 <div className="flex justify-between w-full items-center mb-2">
                   {/* Use <img> to render the image */}
@@ -404,14 +409,14 @@ const Home = () => {
                     alt={pack.name}
                     className="w-10 h-10 object-contain" // Adjust size as needed
                   />
-                  <span className="text-white rounded-lg px-2 py-1 border text-center bg-primary min-w-[80px] text-[10px] sm:text-xs flex items-center justify-center">
+                  <span className="text-white rounded-lg px-2 py-1 border border-primary/20 text-center bg-primary min-w-[80px] text-[10px] sm:text-xs flex items-center justify-center">
                     {formatCurrencyWithCode(pack.usd_value)}
                   </span>
                 </div>
-                <h3 className="font-semibold text-gray-800 text-lg text-center mb-4">
+                <h3 className="font-semibold text-white text-lg text-center mb-4">
                   {pack.name}
                 </h3>
-                <p className="text-gray-600 text-sm text-center">
+                <p className="text-gray-300 text-sm text-center">
                   {pack.short_description || "No description available."}
                 </p>
               </motion.div>
@@ -424,14 +429,14 @@ const Home = () => {
         {/* Show "View More" hint if there are more than 4 packs */}
         {packItems.length > 4 && (
           <div className="text-center mt-6">
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-300 text-sm">
               +{packItems.length - 4} more VIP levels available
             </p>
           </div>
         )}
       </div>
       <div className="md:pb-0 pb-28 md:px-0 px-2">
-        <div className="bg-white border-2 border-green-500 rounded-xl overflow-hidden shadow-sm p-[2px]">
+        <div className="bg-white/[0.05] border border-primary/50 rounded-2xl overflow-hidden shadow-[0_20px_55px_rgba(0,0,0,0.3)] p-[3px]">
           <iframe
             title="Spotify playlist"
             className="block w-full rounded-lg"

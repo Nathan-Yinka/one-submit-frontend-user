@@ -17,10 +17,10 @@ const HomeLayout = () => {
   const profile = useSelector((state) => state.profile.user);
 
   return (
-    <div className="dashboard-shell flex bg-white h-screen">
+    <div className="dashboard-shell flex h-screen">
       <SideBarWeb />
       <div className="flex flex-col w-full h-full">
-        <div className="nav-bar flex items-center md:hidden justify-between h-16 bg-black border-b border-primary/30 shadow px-4 md:mx-4">
+        <div className="nav-bar flex items-center md:hidden justify-between h-16 border-b border-primary/30 shadow px-4 md:mx-4">
           <div className="flex items-center">
             <img
               src={logo}
@@ -46,7 +46,7 @@ const HomeLayout = () => {
             </a>
           </div>
         </div>
-        <div className="flex-1 overflow-y-auto -webkit-overflow-scrolling: touch md:p-4 ">
+        <div className="flex-1 overflow-y-auto -webkit-overflow-scrolling: touch md:p-4">
           <Outlet />
         </div>
       </div>

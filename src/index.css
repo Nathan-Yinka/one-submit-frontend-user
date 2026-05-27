@@ -386,47 +386,63 @@
 }
 
 .dashboard-shell {
-  --dashboard-bg: #ffffff;
-  --dashboard-panel: #ffffff;
-  --dashboard-panel-soft: #f8fafc;
-  --dashboard-border: #e5e7eb;
-  --dashboard-border-strong: #d1d5db;
-  --dashboard-text: #1f2937;
-  --dashboard-muted: #6b7280;
+  --dashboard-bg: #050806;
+  --dashboard-panel: rgba(255, 255, 255, 0.065);
+  --dashboard-panel-solid: #101912;
+  --dashboard-panel-soft: rgba(131, 255, 144, 0.08);
+  --dashboard-border: rgba(255, 255, 255, 0.12);
+  --dashboard-border-strong: rgba(131, 255, 144, 0.34);
+  --dashboard-text: #f4fff6;
+  --dashboard-muted: #c6d2c9;
+  --dashboard-subtle: #94a39a;
   --dashboard-green: #22c55e;
+  --dashboard-lime: #83ff90;
   background: var(--dashboard-bg);
   color: var(--dashboard-text);
 }
 
 .dashboard-shell .flex-1 {
-  background: var(--dashboard-bg);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(34, 197, 94, 0.18), transparent 26rem),
+    radial-gradient(circle at 86% 10%, rgba(190, 74, 74, 0.12), transparent 22rem),
+    linear-gradient(145deg, #050806 0%, #0a130d 45%, #120c16 100%);
 }
 
 .dashboard-shell .nav-bar,
 .dashboard-shell .fixed.bottom-0 {
-  background-color: rgba(5, 8, 6, 0.96) !important;
+  background-color: rgba(5, 8, 6, 0.92) !important;
   backdrop-filter: blur(16px);
 }
 
-.dashboard-shell .bg-white {
-  background-color: var(--dashboard-panel) !important;
+.dashboard-shell :is(.bg-white, .bg-gray-50, .bg-secondary) {
+  background-color: var(--dashboard-panel-solid) !important;
 }
 
-.dashboard-shell .bg-secondary,
-.dashboard-shell .bg-gray-50,
-.dashboard-shell .bg-gray-100,
+.dashboard-shell .bg-gray-100 {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+}
+
 .dashboard-shell .bg-gray-200 {
-  background-color: var(--dashboard-panel-soft) !important;
+  background-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+.dashboard-shell :is(.bg-white, .bg-gray-50, .bg-gray-100, .bg-gray-200, .bg-secondary, .card) {
+  color: var(--dashboard-text) !important;
 }
 
 .dashboard-shell .from-gray-50 {
-  --tw-gradient-from: #f8fafc var(--tw-gradient-from-position) !important;
-  --tw-gradient-to: rgba(248, 250, 252, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-from: #07110a var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(7, 17, 10, 0) var(--tw-gradient-to-position) !important;
 }
 
 .dashboard-shell .to-white,
 .dashboard-shell .to-gray-100 {
-  --tw-gradient-to: #ffffff var(--tw-gradient-to-position) !important;
+  --tw-gradient-to: #120c16 var(--tw-gradient-to-position) !important;
+}
+
+.dashboard-shell .via-gray-100 {
+  --tw-gradient-to: rgba(16, 25, 18, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), #152118 var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
 }
 
 .dashboard-shell .bg-primary {
@@ -434,16 +450,40 @@
   color: #ffffff !important;
 }
 
-.dashboard-shell .text-primary {
-  color: var(--dashboard-green) !important;
+.dashboard-shell :is(.text-black, .text-gray-900, .text-gray-800, .text-gray-700) {
+  color: var(--dashboard-text) !important;
 }
 
-.dashboard-shell :is(.text-blue-600, .text-blue-500, .text-amber-600) {
-  color: var(--dashboard-green) !important;
+.dashboard-shell :is(.text-gray-600, .text-gray-500) {
+  color: var(--dashboard-muted) !important;
+}
+
+.dashboard-shell :is(.text-gray-400, .text-gray-300) {
+  color: var(--dashboard-subtle) !important;
+}
+
+.dashboard-shell .text-primary {
+  color: var(--dashboard-lime) !important;
+}
+
+.dashboard-shell :is(.text-green-600, .text-green-500) {
+  color: var(--dashboard-lime) !important;
+}
+
+.dashboard-shell :is(.text-yellow-600, .text-amber-600) {
+  color: #fde68a !important;
+}
+
+.dashboard-shell :is(.text-blue-600, .text-blue-500) {
+  color: #93c5fd !important;
 }
 
 .dashboard-shell :is(.border-blue-600, .border-amber-600) {
   border-color: var(--dashboard-green) !important;
+}
+
+.dashboard-shell :is(.border, .border-t, .border-b, .border-l, .border-r, .border-gray-100, .border-gray-200, .border-gray-300) {
+  border-color: var(--dashboard-border) !important;
 }
 
 .dashboard-shell :is(.focus\:ring-blue-600:focus, .focus\:ring-amber-600:focus) {
@@ -459,54 +499,46 @@
   background-color: #16a34a !important;
 }
 
-.dashboard-shell :is(.bg-blue-100, .bg-yellow-100, .bg-green-100) {
-  background-color: rgba(34, 197, 94, 0.12) !important;
+.dashboard-shell .bg-green-100 {
+  background-color: rgba(34, 197, 94, 0.16) !important;
 }
 
-.dashboard-shell :is(.text-green-600, .text-yellow-600) {
-  color: var(--dashboard-green) !important;
+.dashboard-shell .bg-yellow-100 {
+  background-color: rgba(245, 158, 11, 0.16) !important;
 }
 
-.dashboard-shell :is(.text-gray-800, .text-gray-700, .text-gray-600) {
-  color: var(--dashboard-text) !important;
+.dashboard-shell .bg-blue-100 {
+  background-color: rgba(59, 130, 246, 0.16) !important;
 }
 
-.dashboard-shell :is(.text-gray-500, .text-gray-400) {
-  color: var(--dashboard-muted) !important;
-}
-
-.dashboard-shell :is(.border, .border-b, .border-t, .border-gray-100, .border-gray-200, .border-gray-300, .border-primary) {
-  border-color: var(--dashboard-border) !important;
+.dashboard-shell :is(.from-gray-200, .via-gray-100, .to-gray-200) {
+  --tw-gradient-from: rgba(255, 255, 255, 0.16) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(255, 255, 255, 0.08) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), rgba(255, 255, 255, 0.08) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
 }
 
 .dashboard-shell :is(.shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl) {
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24) !important;
 }
 
-.dashboard-shell :is(.rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl).bg-white,
-.dashboard-shell .card,
-.dashboard-shell section.bg-white {
-  border: 1px solid var(--dashboard-border);
-}
-
-.dashboard-shell input,
-.dashboard-shell textarea,
-.dashboard-shell select {
-  background-color: #ffffff !important;
+.dashboard-shell :is(input, textarea, select) {
+  background-color: rgba(5, 8, 6, 0.74) !important;
   border-color: var(--dashboard-border-strong) !important;
   color: var(--dashboard-text) !important;
 }
 
-.dashboard-shell input::placeholder,
-.dashboard-shell textarea::placeholder {
-  color: #9ca3af !important;
+.dashboard-shell :is(input, textarea)::placeholder {
+  color: #7f8c83 !important;
 }
 
-.dashboard-shell input:read-only,
-.dashboard-shell input:disabled,
-.dashboard-shell button:disabled {
-  background-color: #e5e7eb !important;
-  color: #6b7280 !important;
+.dashboard-shell :is(input:read-only, input:disabled, textarea:disabled, select:disabled, button:disabled) {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #839187 !important;
+}
+
+.dashboard-shell iframe,
+.dashboard-shell img {
+  color-scheme: normal;
 }
 
 .dashboard-shell button.bg-primary,
@@ -531,7 +563,7 @@
 
 .dashboard-shell .bg-primary\/5,
 .dashboard-shell .bg-primary\/10 {
-  background-color: rgba(34, 197, 94, 0.1) !important;
+  background-color: rgba(34, 197, 94, 0.12) !important;
 }
 
 .dashboard-shell .hover\:bg-primary:hover {
