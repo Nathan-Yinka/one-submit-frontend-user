@@ -52,6 +52,7 @@ import Loader from "./pages/Loader";
 import { Toaster } from "sonner";
 import TermsandCond from "./pages/dashboard/Termsandcond";
 import Landing from "./pages/landing-page/Landing";
+import CookieConsent from "./components/CookieConsent";
 
 function App() {
   return (
@@ -98,6 +99,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
+      <CookieConsent />
       <Toaster
         position={"top-right"}
         richColors
