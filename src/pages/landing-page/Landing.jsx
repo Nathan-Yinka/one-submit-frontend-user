@@ -414,16 +414,6 @@ const Landing = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Search Music Input Area - Scaled up */}
-              <div className="mt-3">
-                <button className="w-full bg-transparent border border-[#83FF90]/50 rounded-xl py-4 px-5 text-left text-gray-400 text-lg md:text-xl font-light hover:border-[#83FF90] transition-colors">
-                  Search Your Music
-                </button>
-                <p className="text-sm md:text-[12px] font-medium text-right mt-2 text-[#C9C9D3] cursor-pointer hover:text-[#83FF90] transition-colors">
-                  I don&apos;t have a Spotify link
-                </p>
-              </div>
             </motion.div>
 
             {/* Right Column - Video & CTA (Lighter Glassy Card) */}
@@ -968,12 +958,15 @@ const Landing = () => {
 
         {/* CTA Button */}
         <div className="mt-12 relative z-10">
-          <button className="group border-2 border-[#83FF90] bg-[#111111]/60 backdrop-blur-md text-white text-lg md:text-[28px] font-medium py-2 px-8 rounded-2xl flex items-center gap-3 hover:bg-[#83FF90]/20 transition-all duration-300">
+          <Link
+            to="/login/signup"
+            className="group border-2 border-[#83FF90] bg-[#111111]/60 backdrop-blur-md text-white text-lg md:text-[28px] font-medium py-2 px-8 rounded-2xl flex items-center gap-3 hover:bg-[#83FF90]/20 transition-all duration-300"
+          >
             Join us now and become a curator
             <span className="text-[#83FF90] text-5xl leading-none group-hover:translate-x-2 transition-transform duration-300">
               »
             </span>
-          </button>
+          </Link>
         </div>
       </section>
 
